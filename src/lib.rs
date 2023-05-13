@@ -1,4 +1,4 @@
-#![ doc = include_str!("../README.md")]
+#![doc = include_str!("../README.md")]
 
 /// Ternary operator macro to condense code a bit
 /// 
@@ -57,4 +57,47 @@ macro_rules! serde_defaulted_struct {
 			}
 		}
 	};
+}
+
+/// Could make defining many modules a bit easier, where instead of using
+/// ```
+/// pub mod foo;
+/// pub use foo::*;
+/// mod bar;
+/// use bar::*;
+/// ```
+/// You could instead use
+/// ```
+/// use keystone::mod_use;
+/// 
+/// mod_use! {
+/// 	pub foo;
+/// 	bar;
+/// }
+/// ```
+/// Not sure how useful this actually is, but here it is.
+
+// Doctest is disabled because `foo` and `bar` aren't actual files, so it would break, this isn't the best, but i don't know of another solution.
+#[cfg(not(doctest))]
+#[macro_export]
+macro_rules! mod_use {
+	{$($vis:vis, $name:ident ;)*} => {
+		$( $vis mod $name; $vis use $name; )*
+	};
+}
+
+/// TODO: Document this
+pub trait PrintResult: Sized
+{
+	fn print_err(self) {
+		self.print_err_msg("Error");
+	}
+	fn print_err_msg(self, msg: &str);
+}
+
+impl<T, E: std::error::Error> PrintResult for Result<T, E>
+{
+	fn print_err_msg(self, msg: &str) {
+		if let Err(err) = self { println!("{msg}: {err}") }
+	}
 }
