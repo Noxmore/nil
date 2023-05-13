@@ -81,8 +81,8 @@ macro_rules! serde_defaulted_struct {
 #[cfg(not(doctest))]
 #[macro_export]
 macro_rules! mod_use {
-	{$($vis:vis, $name:ident ;)*} => {
-		$( $vis mod $name; $vis use $name; )*
+	{$($vis:vis $name:ident ;)*} => {
+		$( $vis mod $name; $vis use $name::*; )*
 	};
 }
 
