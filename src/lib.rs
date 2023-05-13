@@ -86,12 +86,14 @@ macro_rules! mod_use {
 	};
 }
 
-/// TODO: Document this
+/// Used for Results where the value isn't used, and them being [Err] shouldn't stop the proccess, and instead should just be printed out to console.
 pub trait PrintResult: Sized
 {
+	/// Consumes the [Result] and if it's an [Err], prints it out.
 	fn print_err(self) {
 		self.print_err_msg("Error");
 	}
+	/// Consumes the [Result] and if it's an [Err], prints it out with the specified error message.
 	fn print_err_msg(self, msg: &str);
 }
 
