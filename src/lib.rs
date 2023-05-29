@@ -89,7 +89,7 @@ macro_rules! serde_defaulted_struct {
 #[macro_export]
 macro_rules! mod_use {
 	{$($vis:vis $name:ident ;)*} => {
-		$( $vis mod $name; $vis use crate::$name::*; )*
+		$( $vis mod $name; $vis use self::$name::*; )*
 	};
 }
 
