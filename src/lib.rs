@@ -47,7 +47,7 @@ macro_rules! tr {
 macro_rules! serde_defaulted_struct {
 	($struct_vis:vis $struct_name:ident, $defaults_vis:vis $defaults_name:ident {$($vis:vis $name:ident : $type:ty => ($default:expr => $default_path:literal)),* $(,)?}) =>
 	{
-		#[derive(::serde::Serialize, ::serde::Deserialize, Debug)]
+		#[derive(::serde::Serialize, ::serde::Deserialize)]
 		$struct_vis struct $struct_name {
 			$(#[serde(default = $default_path)] $vis $name: $type,)*
 		}
