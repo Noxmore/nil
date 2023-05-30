@@ -7,8 +7,8 @@
 /// ```
 /// use keystone::tr;
 /// 
-/// assert_eq!(tr!(true => 0 ; 1), 0);
-/// assert_eq!(tr!(false => 0 ; 1), 1);
+/// assert_eq!(tr!(true, 0, 1), 0);
+/// assert_eq!(tr!(false, 0, 1), 1);
 /// ```
 /// But if you want to do more complex stuff:
 /// ```
@@ -20,6 +20,9 @@
 macro_rules! tr {
 	($($condition: expr => $a: expr $(,)?)+ ; $b: expr) => {
 		$(if $condition {$a} else)+ {$b}
+	};
+	($condition: expr, $a: expr, $b: expr) => {
+		if $condition {$a} else {$b}
 	};
 }
 
