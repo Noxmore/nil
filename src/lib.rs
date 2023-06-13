@@ -147,3 +147,27 @@ impl<T, E: std::error::Error> PrintResult for Result<T, E>
 		if let Err(err) = self { println!("{msg}: {err}") }
 	}
 }
+
+/// Extension trait for `&str` that shortens the `.to_owned()` function into just `.s()` to get a [String].
+/// 
+/// # Examples
+/// ```
+/// use keystone::*;
+/// 
+/// let string: String = "foo".s();
+/// let owned_str: String = "foo".to_owned();
+/// 
+/// assert_eq!(string, owned_str);
+/// ```
+pub trait ShortToString
+{
+	/// Shortened version of `.to_owned()`
+	fn s(&self) -> String;
+}
+
+impl ShortToString for str
+{
+	fn s(&self) -> String {
+		self.to_owned()
+	}
+}
