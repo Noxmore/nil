@@ -130,7 +130,7 @@ macro_rules! mod_use {
 	};
 }
 
-/// Used for Results where the value isn't used, and them being [Err] shouldn't stop the proccess, and instead should just be printed out to console.
+/// Used for Results where the value isn't used, and them being [Err] shouldn't stop the process, and instead should just be printed out to console.
 pub trait PrintResult: Sized
 {
 	/// Consumes the [Result] and if it's an [Err], prints it out.
