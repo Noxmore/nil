@@ -26,61 +26,42 @@ macro_rules! tr {
 	};
 }
 
-/// An easier way to make a serializable struct with defaults that doesn't lose data if new fields are added.
+/// Creates a `struct` with defaults values specified next to fields to remove boilerplate.
 /// 
-/// This is useful for things like settings that might change in future updates of your software.
+/// I mostly use this with `#[serde(default)]` to make things like settings that won't break if the struct is
+/// changed in a newer version of my application.
 /// 
 /// # Examples
 /// ```
-/// use keystone::serde_defaulted_struct;
+/// use keystone::*;
 /// 
-/// serde_defaulted_struct! (pub Settings, settings_defaults
+/// defaulted_struct!
 /// {
-/// 	pub thing: i32 => 1,
-/// 	pub foo: bool => false,
-/// });
+/// 	/// Doc comments work here, as well as attributes.
+/// 	#[derive(Clone, Debug, PartialEq, Eq)]
+/// 	pub struct Settings
+/// 	{
+/// 		pub thing: i32 => 1,
+/// 		pub foo: bool => false,
+/// 	}
+/// }
 /// 
 /// let settings = Settings::default();
 /// 
 /// assert_eq!(settings.thing, 1);
 /// assert_eq!(settings.foo, false);
-/// ```
-/// `#[derive(Serialize, Deserialize)]` is added automatically, but if you want to use other derive macros, you can add `(macro1, macro2)` after your type name.
-/// ```
-/// use keystone::serde_defaulted_struct;
-/// 
-/// serde_defaulted_struct! (pub Settings(PartialEq, Clone), settings_defaults
-/// {
-/// 	pub thing: i32 => 1,
-/// 	pub foo: bool => false,
-/// });
-/// 
-/// let settings = Settings::default();
-/// 
-/// assert!(settings == settings.clone());
-/// ```
+/// assert_eq!(settings, settings.clone());
 #[macro_export]
-macro_rules! serde_defaulted_struct {
-	($struct_vis:vis $struct_name:ident, $defaults_vis:vis $defaults_name:ident {$($vis:vis $name:ident : $type:ty => $default:expr),* $(,)?}) =>
+macro_rules! defaulted_struct {
 	{
-		#[derive(::serde::Serialize, ::serde::Deserialize)]
-		#[serde(default)]
-		$struct_vis struct $struct_name {
-			$($vis $name: $type,)*
+		$(#[$attr:meta])*
+		$struct_vis:vis struct $struct_name:ident
+		{
+			$($vis:vis $name:ident : $type:ty => $default:expr),* $(,)?
 		}
-
-		impl Default for $struct_name {
-			fn default() -> Self {
-				Self {
-					$($name: $default,)*
-				}
-			}
-		}
-	};
-	($struct_vis:vis $struct_name:ident($($macro: ident),* $(,)?), $defaults_vis:vis $defaults_name:ident {$($vis:vis $name:ident : $type:ty => $default:expr),* $(,)?}) =>
+	} =>
 	{
-		#[derive(::serde::Serialize, ::serde::Deserialize, $($macro,)*)]
-		#[serde(default)]
+		$(#[$attr])*
 		$struct_vis struct $struct_name {
 			$($vis $name: $type,)*
 		}
