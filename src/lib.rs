@@ -36,8 +36,8 @@ macro_rules! tr {
 /// 
 /// serde_defaulted_struct! (pub Settings, settings_defaults
 /// {
-/// 	pub thing: i32 => (1 => "settings_defaults::thing"),
-/// 	pub foo: bool => (false => "settings_defaults::foo"),
+/// 	pub thing: i32 => 1,
+/// 	pub foo: bool => false,
 /// });
 /// 
 /// let settings = Settings::default();
@@ -45,16 +45,14 @@ macro_rules! tr {
 /// assert_eq!(settings.thing, 1);
 /// assert_eq!(settings.foo, false);
 /// ```
-/// Unfortunately, the `"settings_defaults::thing"` is necessary due to compiler limitations.
-/// 
 /// `#[derive(Serialize, Deserialize)]` is added automatically, but if you want to use other derive macros, you can add `(macro1, macro2)` after your type name.
 /// ```
 /// use keystone::serde_defaulted_struct;
 /// 
 /// serde_defaulted_struct! (pub Settings(PartialEq, Clone), settings_defaults
 /// {
-/// 	pub thing: i32 => (1 => "settings_defaults::thing"),
-/// 	pub foo: bool => (false => "settings_defaults::foo"),
+/// 	pub thing: i32 => 1,
+/// 	pub foo: bool => false,
 /// });
 /// 
 /// let settings = Settings::default();
@@ -63,15 +61,12 @@ macro_rules! tr {
 /// ```
 #[macro_export]
 macro_rules! serde_defaulted_struct {
-	($struct_vis:vis $struct_name:ident, $defaults_vis:vis $defaults_name:ident {$($vis:vis $name:ident : $type:ty => ($default:expr => $default_path:literal)),* $(,)?}) =>
+	($struct_vis:vis $struct_name:ident, $defaults_vis:vis $defaults_name:ident {$($vis:vis $name:ident : $type:ty => $default:expr),* $(,)?}) =>
 	{
 		#[derive(::serde::Serialize, ::serde::Deserialize)]
+		#[serde(default)]
 		$struct_vis struct $struct_name {
-			$(#[serde(default = $default_path)] $vis $name: $type,)*
-		}
-
-		$defaults_vis mod $defaults_name {
-			$(pub fn $name() -> $type {$default})*
+			$($vis $name: $type,)*
 		}
 
 		impl Default for $struct_name {
@@ -82,15 +77,12 @@ macro_rules! serde_defaulted_struct {
 			}
 		}
 	};
-	($struct_vis:vis $struct_name:ident($($macro: ident),* $(,)?), $defaults_vis:vis $defaults_name:ident {$($vis:vis $name:ident : $type:ty => ($default:expr => $default_path:literal)),* $(,)?}) =>
+	($struct_vis:vis $struct_name:ident($($macro: ident),* $(,)?), $defaults_vis:vis $defaults_name:ident {$($vis:vis $name:ident : $type:ty => $default:expr),* $(,)?}) =>
 	{
 		#[derive(::serde::Serialize, ::serde::Deserialize, $($macro,)*)]
+		#[serde(default)]
 		$struct_vis struct $struct_name {
-			$(#[serde(default = $default_path)] $vis $name: $type,)*
-		}
-
-		$defaults_vis mod $defaults_name {
-			$(pub fn $name() -> $type {$default})*
+			$($vis $name: $type,)*
 		}
 
 		impl Default for $struct_name {
