@@ -83,7 +83,7 @@ macro_rules! defaulted_struct {
 /// mod bar;
 /// use bar::*;
 /// ```
-/// You could instead use
+/// You could use
 /// ```
 /// use keystone::mod_use;
 /// 
