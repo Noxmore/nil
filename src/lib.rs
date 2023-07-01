@@ -104,6 +104,35 @@ macro_rules! mod_use {
 	};
 }
 
+/// Reads a directory without having to do tons of error-checking boilerplate.
+/// 
+/// Only executes if everything goes well
+/// 
+/// # Examples
+/// ```
+/// use keystone::*;
+/// 
+/// read_dir!(path, |entry|
+/// {
+///		// (Do something with entry)
+/// });
+/// ```
+
+// Doctest is disabled for the same reason above
+#[cfg(not(doctest))]
+#[macro_export]
+macro_rules! read_dir {
+	($path:expr, |$entry:ident| $body:block) =>
+	{
+		if let Ok(read_dir) = $path.read_dir() {
+			for entry in read_dir {
+				if let Ok($entry) = entry
+					$body
+			}
+		}
+	};
+}
+
 /// Used for Results where the value isn't used, and them being [Err] shouldn't stop the process, and instead should just be printed out to console.
 pub trait PrintResult: Sized
 {
