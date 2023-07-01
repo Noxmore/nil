@@ -39,6 +39,7 @@ macro_rules! tr {
 /// {
 /// 	/// Doc comments work here, as well as attributes.
 /// 	#[derive(Clone, Debug, PartialEq, Eq)]
+/// 	#[serde(default)]
 /// 	pub struct Settings
 /// 	{
 /// 		pub thing: i32 => 1,
@@ -57,13 +58,13 @@ macro_rules! defaulted_struct {
 		$(#[$attr:meta])*
 		$struct_vis:vis struct $struct_name:ident
 		{
-			$($vis:vis $name:ident : $type:ty => $default:expr),* $(,)?
+			$($(#[$field_attr:meta])* $vis:vis $name:ident : $type:ty => $default:expr),* $(,)?
 		}
 	} =>
 	{
 		$(#[$attr])*
 		$struct_vis struct $struct_name {
-			$($vis $name: $type,)*
+			$($(#[$field_attr])* $vis $name: $type,)*
 		}
 
 		impl Default for $struct_name {
