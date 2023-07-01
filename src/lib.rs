@@ -122,7 +122,7 @@ impl<T, E: std::error::Error> PrintResult for Result<T, E>
 	}
 }
 
-/// Extension trait for `&str` that shortens the `.to_owned()` function into just `.s()` to get a [String].
+/// Extension trait that shortens `.to_owned()` or `.to_string_lossy().to_string()` into just `.s()` to get a [String].
 /// 
 /// # Examples
 /// ```
@@ -135,7 +135,7 @@ impl<T, E: std::error::Error> PrintResult for Result<T, E>
 /// ```
 pub trait ShortToString
 {
-	/// Shortened version of `.to_owned()`
+	/// Shorthand for getting a string representation
 	fn s(&self) -> String;
 }
 
@@ -143,5 +143,19 @@ impl ShortToString for str
 {
 	fn s(&self) -> String {
 		self.to_owned()
+	}
+}
+
+impl ShortToString for std::ffi::OsStr
+{
+	fn s(&self) -> String {
+		self.to_string_lossy().to_string()
+	}
+}
+
+impl ShortToString for std::path::Path
+{
+	fn s(&self) -> String {
+		self.to_string_lossy().to_string()
 	}
 }
