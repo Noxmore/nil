@@ -34,8 +34,8 @@ macro_rules! tr {
 /// ```ignore
 /// pub mod foo;
 /// pub use foo::*;
-/// mod bar;
-/// use bar::*;
+/// pub mod bar;
+/// pub use bar::*;
 /// ```
 /// You could use
 /// ```ignore
@@ -49,7 +49,7 @@ macro_rules! tr {
 #[macro_export]
 macro_rules! flat {
 	{$($name:ident ;)*} => {
-		$( pub mod $name; $vis use self::$name::*; )*
+		$( pub mod $name; pub use self::$name::*; )*
 	};
 }
 
