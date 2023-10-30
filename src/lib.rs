@@ -1,5 +1,7 @@
 #![doc = include_str!("../README.md")]
 
+pub use smart_default::*;
+
 /// Ternary operator macro to condense code a bit
 /// 
 /// # Examples
@@ -23,57 +25,6 @@ macro_rules! tr {
 	};
 	($condition: expr, $a: expr, $b: expr) => {
 		if $condition {$a} else {$b}
-	};
-}
-
-/// Creates a `struct` with defaults values specified next to fields to remove boilerplate.
-/// 
-/// I mostly use this with `#[serde(default)]` to make things like settings that won't break if the struct is
-/// changed in a newer version of my application.
-/// 
-/// # Examples
-/// ```
-/// use keystone::*;
-/// 
-/// defaulted_struct!
-/// {
-/// 	/// Doc comments work here, as well as attributes.
-/// 	#[derive(Clone, Debug, PartialEq, Eq)]
-/// 	#[serde(default)]
-/// 	pub struct Settings
-/// 	{
-/// 		pub thing: i32 => 1,
-/// 		pub foo: bool => false,
-/// 	}
-/// }
-/// 
-/// let settings = Settings::default();
-/// 
-/// assert_eq!(settings.thing, 1);
-/// assert_eq!(settings.foo, false);
-/// assert_eq!(settings, settings.clone());
-#[macro_export]
-macro_rules! defaulted_struct {
-	{
-		$(#[$attr:meta])*
-		$struct_vis:vis struct $struct_name:ident
-		{
-			$($(#[$field_attr:meta])* $vis:vis $name:ident : $type:ty => $default:expr),* $(,)?
-		}
-	} =>
-	{
-		$(#[$attr])*
-		$struct_vis struct $struct_name {
-			$($(#[$field_attr])* $vis $name: $type,)*
-		}
-
-		impl Default for $struct_name {
-			fn default() -> Self {
-				Self {
-					$($name: $default,)*
-				}
-			}
-		}
 	};
 }
 

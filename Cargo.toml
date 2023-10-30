@@ -4,3 +4,4 @@ version = "0.10.0"
 edition = "2021"
 
 [dependencies]
+smart-default = "0.7"
