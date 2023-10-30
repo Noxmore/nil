@@ -77,30 +77,28 @@ macro_rules! defaulted_struct {
 	};
 }
 
-/// Could make defining many modules a bit easier, where instead of using
-/// ```
+/// Makes defining a flat module (e.g. foo::Baz instead of foo::bar::Baz) easier.
+///
+/// Instead of
+/// ```ignore
 /// pub mod foo;
 /// pub use foo::*;
 /// mod bar;
 /// use bar::*;
 /// ```
 /// You could use
-/// ```
-/// use keystone::mod_use;
-/// 
-/// mod_use! {
-/// 	pub foo;
+/// ```ignore
+/// use keystone::*;
+///
+/// flat! {
+/// 	foo;
 /// 	bar;
 /// }
 /// ```
-/// Not sure how useful this actually is, but here it is.
-
-// Doctest is disabled because `foo` and `bar` aren't actual files, so it would break, this isn't the best, but i don't know of another solution.
-#[cfg(not(doctest))]
 #[macro_export]
-macro_rules! mod_use {
-	{$($vis:vis $name:ident ;)*} => {
-		$( $vis mod $name; $vis use self::$name::*; )*
+macro_rules! flat {
+	{$($name:ident ;)*} => {
+		$( pub mod $name; $vis use self::$name::*; )*
 	};
 }
 
@@ -109,7 +107,7 @@ macro_rules! mod_use {
 /// Only executes if everything goes well
 /// 
 /// # Examples
-/// ```
+/// ```ignore
 /// use keystone::*;
 /// 
 /// read_dir!(path, |entry|
@@ -117,9 +115,6 @@ macro_rules! mod_use {
 ///		// (Do something with entry)
 /// });
 /// ```
-
-// Doctest is disabled for the same reason above
-#[cfg(not(doctest))]
 #[macro_export]
 macro_rules! read_dir {
 	($path:expr, |$entry:ident| $body:block) =>
@@ -131,24 +126,6 @@ macro_rules! read_dir {
 			}
 		}
 	};
-}
-
-/// Used for Results where the value isn't used, and them being [Err] shouldn't stop the process, and instead should just be printed out to console.
-pub trait PrintResult: Sized
-{
-	/// Consumes the [Result] and if it's an [Err], prints it out.
-	fn print_err(self) {
-		self.print_err_msg("Error");
-	}
-	/// Consumes the [Result] and if it's an [Err], prints it out with the specified error message.
-	fn print_err_msg(self, msg: &str);
-}
-
-impl<T, E: std::error::Error> PrintResult for Result<T, E>
-{
-	fn print_err_msg(self, msg: &str) {
-		if let Err(err) = self { println!("{msg}: {err}") }
-	}
 }
 
 /// Extension trait that shortens `.to_owned()` or `.to_string_lossy().to_string()` into just `.s()` to get a [String].
