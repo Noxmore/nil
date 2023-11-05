@@ -116,3 +116,10 @@ impl ShortToString for std::path::Path
 		self.to_string_lossy().to_string()
 	}
 }
+
+impl ShortToString for std::ffi::CStr
+{
+	fn s(&self) -> String {
+		self.to_string_lossy().to_string()
+	}
+}
