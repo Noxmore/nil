@@ -4,32 +4,6 @@ pub use smart_default::*;
 pub use once_cell;
 pub use once_cell::sync::Lazy;
 
-/// Ternary operator macro to condense code a bit
-/// 
-/// # Examples
-/// The simplest usage is:
-/// ```
-/// use keystone::tr;
-/// 
-/// assert_eq!(tr!(true, 0, 1), 0);
-/// assert_eq!(tr!(false, 0, 1), 1);
-/// ```
-/// But if you want to do more complex stuff:
-/// ```
-/// use keystone::tr;
-/// 
-/// assert_eq!(tr!(false => 0, false => 1, true => 2, false => 3 ; 4), 2);
-/// ```
-#[macro_export]
-macro_rules! tr {
-	($($condition: expr => $a: expr $(,)?)+ ; $b: expr) => {
-		$(if $condition {$a} else)+ {$b}
-	};
-	($condition: expr, $a: expr, $b: expr) => {
-		if $condition {$a} else {$b}
-	};
-}
-
 /// Makes defining a flat module (e.g. foo::Baz instead of foo::bar::Baz) easier.
 ///
 /// Instead of
