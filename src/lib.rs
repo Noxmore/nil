@@ -1,6 +1,8 @@
 #![doc = include_str!("../README.md")]
 
 pub use smart_default::*;
+pub use once_cell;
+pub use once_cell::sync::Lazy;
 
 /// Ternary operator macro to condense code a bit
 /// 
