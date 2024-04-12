@@ -4,6 +4,23 @@ pub use smart_default::*;
 pub use once_cell;
 pub use once_cell::sync::Lazy;
 
+/// Extra std imports that i use a lot.
+pub mod std_imports {
+	pub use std::path::{Path, PathBuf};
+	pub use std::fs;
+	pub use std::io;
+	pub use std::thread;
+	pub use std::collections::{HashMap, BTreeMap};
+	pub use std::sync::{Arc, Mutex, RwLock};
+	pub use std::sync::atomic;
+	pub use std::borrow::Cow;
+	pub use std::time::{Duration, Instant};
+	pub use std::mem;
+	pub use std::fmt;
+	pub use std::env;
+	pub use std::process::Command;
+}
+
 /// Makes defining a flat module (e.g. foo::Baz instead of foo::bar::Baz) easier.
 ///
 /// Instead of
