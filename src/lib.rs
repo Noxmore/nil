@@ -18,7 +18,7 @@ pub mod std_imports {
 	pub use std::mem;
 	pub use std::fmt;
 	pub use std::env;
-	pub use std::process::Command;
+	pub use std::process;
 }
 
 /// Makes defining a flat module (e.g. foo::Baz instead of foo::bar::Baz) easier.
