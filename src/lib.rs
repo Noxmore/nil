@@ -41,8 +41,8 @@ pub mod std_imports {
 /// ```
 #[macro_export]
 macro_rules! flat {
-	{$($name:ident ;)*} => {
-		$( pub mod $name; pub use self::$name::*; )*
+	{$($(#[$attr:meta])* $name:ident ;)*} => {
+		$( $(#[$attr])* pub mod $name; $(#[$attr])* pub use self::$name::*; )*
 	};
 }
 
