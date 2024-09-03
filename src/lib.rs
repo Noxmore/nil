@@ -3,16 +3,19 @@
 pub use smart_default::*;
 pub use once_cell;
 pub use once_cell::sync::Lazy;
+pub use parking_lot;
+pub use parking_lot::{Mutex, MutexGuard, MappedMutexGuard, RwLock, RwLockReadGuard, RwLockWriteGuard, MappedRwLockReadGuard};
 
 /// Extra std imports that i use a lot.
-pub mod std_imports {
+pub mod std_prelude {
 	pub use std::path::{Path, PathBuf};
 	pub use std::fs;
 	pub use std::io;
 	pub use std::thread;
 	pub use std::collections::{HashMap, BTreeMap};
-	pub use std::sync::{Arc, Mutex, RwLock};
-	pub use std::sync::atomic;
+	pub use std::sync::Arc;
+	pub use std::sync::atomic::*;
+	pub use std::error::Error;
 	pub use std::borrow::Cow;
 	pub use std::time::{Duration, Instant};
 	pub use std::mem;
