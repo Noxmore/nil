@@ -64,8 +64,7 @@ macro_rules! flat {
 /// ```
 #[macro_export]
 macro_rules! read_dir {
-	($path:expr, |$entry:ident| $body:block) =>
-	{
+	($path:expr, |$entry:ident| $body:block) => {
 		if let Ok(read_dir) = $path.read_dir() {
 			for entry in read_dir {
 				if let Ok($entry) = entry
@@ -86,35 +85,30 @@ macro_rules! read_dir {
 /// 
 /// assert_eq!(string, owned_str);
 /// ```
-pub trait ShortToString
-{
+pub trait ShortToString {
 	/// Shorthand for getting a string representation
 	fn s(&self) -> String;
 }
 
-impl ShortToString for str
-{
+impl ShortToString for str {
 	fn s(&self) -> String {
 		self.to_owned()
 	}
 }
 
-impl ShortToString for std::ffi::OsStr
-{
+impl ShortToString for std::ffi::OsStr {
 	fn s(&self) -> String {
 		self.to_string_lossy().to_string()
 	}
 }
 
-impl ShortToString for std::path::Path
-{
+impl ShortToString for std::path::Path {
 	fn s(&self) -> String {
 		self.to_string_lossy().to_string()
 	}
 }
 
-impl ShortToString for std::ffi::CStr
-{
+impl ShortToString for std::ffi::CStr {
 	fn s(&self) -> String {
 		self.to_string_lossy().to_string()
 	}
