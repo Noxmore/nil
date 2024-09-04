@@ -74,6 +74,14 @@ macro_rules! read_dir {
 	};
 }
 
+/// Expands to a function that prepends a message to an io error, to be used with `Result::map_err`.
+#[macro_export]
+macro_rules! io_add_msg {
+	($($msg:tt)+) => {
+		|err| std::io::Error::new(err.kind(), format!("{} {err}", format!($($msg)+)))
+	};
+}
+
 /// Extension trait that shortens `.to_owned()` or `.to_string_lossy().to_string()` into just `.s()` to get a [String].
 /// 
 /// # Examples
