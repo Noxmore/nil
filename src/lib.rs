@@ -1,10 +1,8 @@
 #![doc = include_str!("../README.md")]
 
-pub use smart_default::*;
+pub use smart_default;
 pub use once_cell;
-pub use once_cell::sync::Lazy;
 pub use parking_lot;
-pub use parking_lot::{Mutex, MutexGuard, MappedMutexGuard, RwLock, RwLockReadGuard, RwLockWriteGuard, MappedRwLockReadGuard};
 
 /// Extra std imports that i use a lot.
 pub mod std_prelude {
@@ -22,6 +20,16 @@ pub mod std_prelude {
 	pub use std::fmt;
 	pub use std::env;
 	pub use std::process;
+}
+
+pub mod prelude {
+	pub use crate::flat;
+	pub use crate::io_add_msg;
+	pub use crate::ShortToString;
+
+	pub use once_cell::sync::Lazy;
+	pub use parking_lot::{Mutex, MutexGuard, MappedMutexGuard, RwLock, RwLockReadGuard, RwLockWriteGuard, MappedRwLockReadGuard};
+	pub use smart_default::*;
 }
 
 /// Makes defining a flat module (e.g. foo::Baz instead of foo::bar::Baz) easier.
