@@ -104,3 +104,8 @@ impl ShortToString for std::ffi::CStr {
 		self.to_string_lossy().to_string()
 	}
 }
+
+/// Shorthand for `T::default()` or `Default::default()`, good for structure initialization. Inspired by a function of the same name and purpose in `bevy_utils`.
+pub fn default<T: Default>() -> T {
+	T::default()
+}
