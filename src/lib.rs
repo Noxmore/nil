@@ -49,31 +49,6 @@ macro_rules! flat {
 	};
 }
 
-/// Reads a directory without having to do tons of error-checking boilerplate.
-/// 
-/// Only executes if everything goes well
-/// 
-/// # Examples
-/// ```ignore
-/// use keystone::*;
-/// 
-/// read_dir!(path, |entry|
-/// {
-///		// (Do something with entry)
-/// });
-/// ```
-#[macro_export]
-macro_rules! read_dir {
-	($path:expr, |$entry:ident| $body:block) => {
-		if let Ok(read_dir) = $path.read_dir() {
-			for entry in read_dir {
-				if let Ok($entry) = entry
-					$body
-			}
-		}
-	};
-}
-
 /// Expands to a function that prepends a message to an io error, to be used with `Result::map_err`.
 #[macro_export]
 macro_rules! io_add_msg {
