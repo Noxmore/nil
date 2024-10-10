@@ -7,7 +7,7 @@ authors = ["Noxmore"]
 repository = "https://github.com/Noxmore/nil"
 readme = "README.md"
 license = "MIT OR Apache-2.0"
-categories = ["utilities", "misc"]
+categories = ["rust-patterns"]
 
 [dependencies]
 once_cell = "1"
