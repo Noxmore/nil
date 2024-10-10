@@ -43,7 +43,7 @@ pub mod prelude {
 /// ```
 /// You could use
 /// ```ignore
-/// use keystone::*;
+/// use nil::*;
 ///
 /// flat! {
 /// 	foo;
@@ -69,7 +69,7 @@ macro_rules! io_add_msg {
 /// 
 /// # Examples
 /// ```
-/// use keystone::*;
+/// use nil::*;
 /// 
 /// let string: String = "foo".s();
 /// let owned_str: String = "foo".to_owned();
