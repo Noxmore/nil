@@ -20,6 +20,22 @@ pub mod std_prelude {
 	pub use std::fmt;
 	pub use std::env;
 	pub use std::process;
+	pub use std::f32::consts::{
+		PI,
+		FRAC_PI_2,
+		FRAC_PI_3,
+		FRAC_PI_4,
+		FRAC_PI_6,
+		FRAC_PI_8,
+	};
+	pub use std::f64::consts::{
+		PI as PI_F64,
+		FRAC_PI_2 as FRAC_PI_2_F64,
+		FRAC_PI_3 as FRAC_PI_3_F64,
+		FRAC_PI_4 as FRAC_PI_4_F64,
+		FRAC_PI_6 as FRAC_PI_6_F64,
+		FRAC_PI_8 as FRAC_PI_8_F64,
+	};
 }
 
 pub mod prelude {
