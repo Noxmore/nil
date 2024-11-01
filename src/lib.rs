@@ -20,6 +20,7 @@ pub mod std_prelude {
 	pub use std::fmt;
 	pub use std::env;
 	pub use std::process;
+	pub use std::any::*;
 	pub use std::f32::consts::{
 		PI,
 		FRAC_PI_2,
