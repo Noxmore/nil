@@ -99,30 +99,35 @@ pub trait ShortToString {
 }
 
 impl ShortToString for str {
+	#[inline]
 	fn s(&self) -> String {
 		self.to_owned()
 	}
 }
 
 impl ShortToString for std::ffi::OsStr {
+	#[inline]
 	fn s(&self) -> String {
 		self.to_string_lossy().to_string()
 	}
 }
 
 impl ShortToString for std::path::Path {
+	#[inline]
 	fn s(&self) -> String {
 		self.to_string_lossy().to_string()
 	}
 }
 
 impl ShortToString for std::ffi::CStr {
+	#[inline]
 	fn s(&self) -> String {
 		self.to_string_lossy().to_string()
 	}
 }
 
 /// Shorthand for `T::default()` or `Default::default()`, good for structure initialization. Inspired by a function of the same name and purpose in `bevy_utils`.
+#[inline]
 pub fn default<T: Default>() -> T {
 	T::default()
 }
