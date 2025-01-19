@@ -10,7 +10,7 @@ pub mod std_prelude {
 	pub use std::fs;
 	pub use std::io;
 	pub use std::thread;
-	pub use std::collections::{HashMap, BTreeMap};
+	pub use std::collections::{HashMap, BTreeMap, HashSet, BTreeSet};
 	pub use std::sync::Arc;
 	pub use std::sync::atomic::*;
 	pub use std::error::Error;
