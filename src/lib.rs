@@ -19,6 +19,7 @@ pub mod std_prelude {
 	pub use std::mem;
 	pub use std::fmt;
 	pub use std::env;
+	pub use std::ptr;
 	pub use std::process;
 	pub use std::any::*;
 	pub use std::f32::consts::{
