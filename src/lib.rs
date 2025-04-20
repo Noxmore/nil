@@ -63,14 +63,14 @@ pub mod prelude {
 /// use nil::*;
 ///
 /// flat! {
-/// 	foo;
-/// 	bar;
+///     foo;
+///     bar;
 /// }
 /// ```
 #[macro_export]
 macro_rules! flat {
 	{$($(#[$attr:meta])* $name:ident ;)*} => {
-		$( $(#[$attr])* pub mod $name; $(#[$attr])* pub use self::$name::*; )*
+		$( $(#[$attr])* mod $name; $(#[$attr])* pub use self::$name::*; )*
 	};
 }
 
